@@ -1,0 +1,15 @@
+flask-swagger-ui 
+Flask
+Werkzeug
+flask_cors 
+gunicorn
+validate_email
+nose
+requests
+argparse
+uuid
+routes
+urllib3
+Flask-SQLAlchemy
+docker
+flask_session

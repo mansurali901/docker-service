@@ -1,0 +1,102 @@
+swagger: "2.0"
+info:
+  title: Sample API
+  description: API description in Markdown.
+  version: 1.0.0
+host: 127.0.0.1:5000
+basePath: /
+schemes:
+  - http
+paths:
+  /containers/{dockerhost}:
+    get:
+      summary: Returns a list of users.
+      description: Optional extended description in Markdown.
+      parameters:
+      - in: path
+        name: dockerhost
+        required: true
+        type: string
+        description: Provide docker Host IP and port like this [127.0.0.1:2375]  
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+        400:   
+          description: Invalid host ID format
+        404:
+          description: Host Not Found
+        500:
+          description: Server is not available            
+  /containers/{dockerhost}/{userid}:
+    get:
+      summary: Returns specific container from docker host filter by container.
+      parameters:
+        - in: path
+          name: dockerhost
+          required: true
+          type: string
+          description: Provide docker Host IP and port like this [127.0.0.1:2375]
+        - in: path  
+          name: userid
+          type: string
+          required: true
+          minimum: 2
+          description: This must be the container name (web-container01)
+      responses:
+        200:
+          description: OK
+        400:   
+          description: Invalid host ID format or container name
+        404:
+          description: Host Not Found or container name
+        500:
+          description: Server is not available container name format is malformed            
+    post:
+      parameters:
+        - in: path
+          name: dockerhost
+          required: true
+          type: string
+          description: Provide docker Host IP and port like this [127.0.0.1:2375]
+        - in: path  
+          name: userid
+          type: string
+          required: true
+          minimum: 2
+          description: This must be the container name (web-container01)
+        - in: body 
+          name: ContainerCreate
+          description: Create New container
+          schema: 
+            type: object
+            required:
+              - ContainerImageName
+              - ContainerCommand
+              - ContainerName
+              - userId
+              - ContainerEnvironmentenv
+            properties:
+               ContainerImageName:
+                 type: string
+               ContainerCommand:
+                 type: string
+               ContainerName:
+                 type: string
+               userId:
+                 type: string
+               ContainerEnvironmentenv:
+                 type: string
+               ContainerEnvironmentRpass:
+                 type: string       
+      summary: Create Docker Container 
+      responses:
+        200:
+          description: Container Created
+        400:   
+          description: Invalid host ID format or container name
+        404:
+          description: Host Not Found or container name
+        500:
+          description: Server is not available container name format is malformed
